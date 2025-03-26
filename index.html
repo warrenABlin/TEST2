@@ -2,15 +2,23 @@
 <html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>看圖猜字</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             text-align: center;
             margin: 0;
-            padding: 20px;
+            padding: 0;
             overflow: hidden; /* 確保全螢幕影片正常顯示 */
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh; /* 保證內容在視窗中央 */
+            padding: 20px;
         }
         .slots {
             display: flex;
@@ -20,11 +28,11 @@
             margin-bottom: 20px;
         }
         .slot {
-            width: 70px;
-            height: 70px;
+            width: 15vw; /* 使用百分比寬度以適應不同屏幕 */
+            height: 15vw; /* 使用百分比高度以適應不同屏幕 */
             text-align: center;
-            font-size: 24px;
-            line-height: 70px;
+            font-size: 5vw; /* 使用相對大小以適應不同屏幕 */
+            line-height: 15vw;
             background-color: #ffffff;
             border: 2px solid #ccc;
             border-radius: 5px;
@@ -37,15 +45,15 @@
         }
         .grid {
             display: grid;
-            grid-template-columns: repeat(4, 70px);
-            gap: 10px;
+            grid-template-columns: repeat(4, 15vw); /* 使用百分比寬度 */
+            gap: 2vw; /* 使用相對間距 */
         }
         .cell {
-            width: 70px;
-            height: 70px;
+            width: 15vw;
+            height: 15vw;
             text-align: center;
-            font-size: 24px;
-            line-height: 70px;
+            font-size: 5vw;
+            line-height: 15vw;
             background-color: #f0f0f0;
             border: 2px solid #ccc;
             border-radius: 5px;
@@ -55,16 +63,16 @@
             background-color: #d0d0d0;
         }
         .side-image {
-            width: 100px;
+            width: 20vw; /* 使用百分比寬度以適應不同屏幕 */
             height: auto;
-            margin: 0 20px;
+            margin: 0 2vw;
         }
         #result {
             margin-top: 20px;
-            font-size: 18px;
+            font-size: 4vw;
         }
         .main-image {
-            width: 300px;
+            width: 60vw; /* 使用百分比寬度以適應不同屏幕 */
             height: auto;
             margin: 20px 0;
         }
@@ -85,35 +93,37 @@
     </style>
 </head>
 <body>
-    <h1>看圖猜字</h1>
-    <p>請點擊 4x4 網格中的文字，並依正確順序填入上方的空白框。</p>
+    <div class="container">
+        <h1>看圖猜字</h1>
+        <p>請點擊 4x4 網格中的文字，並依正確順序填入上方的空白框。</p>
 
-    <!-- 插入主圖片 -->
-    <img src="your-main-image.png" alt="主要圖片" class="main-image">
+        <!-- 插入主圖片 -->
+        <img src="your-main-image.png" alt="主要圖片" class="main-image">
 
-    <!-- 空白框 -->
-    <div class="slots" id="answerSlots">
-        <div class="slot" id="slot1"></div>
-        <div class="slot" id="slot2"></div>
-        <div class="slot" id="slot3"></div>
-        <div class="slot" id="slot4"></div>
-    </div>
-    
-    <!-- 4x4 網格和左右圖片 -->
-    <div class="grid-container">
-        <img src="your-left-image.png" alt="左側圖片" class="side-image">
-        <div class="grid" id="wordGrid"></div>
-        <img src="your-right-image.png" alt="右側圖片" class="side-image">
-    </div>
+        <!-- 空白框 -->
+        <div class="slots" id="answerSlots">
+            <div class="slot" id="slot1"></div>
+            <div class="slot" id="slot2"></div>
+            <div class="slot" id="slot3"></div>
+            <div class="slot" id="slot4"></div>
+        </div>
+        
+        <!-- 4x4 網格和左右圖片 -->
+        <div class="grid-container">
+            <img src="your-left-image.png" alt="左側圖片" class="side-image">
+            <div class="grid" id="wordGrid"></div>
+            <img src="your-right-image.png" alt="右側圖片" class="side-image">
+        </div>
 
-    <p id="result"></p>
+        <p id="result"></p>
 
-    <!-- 背景音樂 -->
-    <audio id="backgroundMusic" src="your-background-music.mp3" autoplay loop></audio>
+        <!-- 背景音樂 -->
+        <audio id="backgroundMusic" src="your-background-music.mp3" autoplay loop></audio>
 
-    <!-- 全螢幕影片容器 -->
-    <div id="videoContainer">
-        <video id="victoryVideo" src="your-victory-video.mp4" autoplay></video>
+        <!-- 全螢幕影片容器 -->
+        <div id="videoContainer">
+            <video id="victoryVideo" src="your-victory-video.mp4" autoplay></video>
+        </div>
     </div>
 
     <script>
