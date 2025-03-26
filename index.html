@@ -12,6 +12,12 @@
             padding: 0;
             overflow: hidden; /* 防止滾動 */
         }
+        #scalable-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            transform-origin: top left;
+        }
         h1 {
             margin-bottom: 5px; /* 縮短標題與段落的間距 */
         }
@@ -19,23 +25,10 @@
             margin-top: 0;
             margin-bottom: 10px; /* 段落與其他內容的距離 */
         }
-        .container {
-            position: relative;
-            transform: scale(0.8); /* 縮小整個內容比例 */
-            transform-origin: top center; /* 縮小比例的中心點 */
-            width: 100%;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            box-sizing: border-box;
-        }
         .main-image {
             width: 70%; /* 縮小主圖片的比例 */
-            height: auto; /* 保持圖片比例 */
-            margin: 10px 0; /* 適當間距 */
+            height: auto;
+            margin: 10px 0;
         }
         .slots {
             display: flex;
@@ -105,7 +98,7 @@
     </style>
 </head>
 <body>
-    <div class="container">
+    <div id="scalable-container">
         <h1>看圖猜字</h1>
         <p>請點擊 4x4 網格中的文字，並依正確順序填入上方的空白框。</p>
 
@@ -139,6 +132,20 @@
     </div>
 
     <script>
+        // 動態縮放比例
+        function scaleContent() {
+            const scalableContainer = document.getElementById("scalable-container");
+            const scale = Math.min(
+                window.innerWidth / scalableContainer.offsetWidth,
+                window.innerHeight / scalableContainer.offsetHeight
+            );
+            scalableContainer.style.transform = `scale(${scale})`;
+        }
+
+        // 縮放內容以適應螢幕
+        window.onload = scaleContent;
+        window.onresize = scaleContent;
+
         // 提供的 4x4 原始文字
         const words = ["祝", "你", "開", "心", "生", "日", "快", "樂", "身", "體", "健", "康", "福", "如", "東", "海"];
         const correctAnswers = ["生", "日", "快", "樂"]; // 正確的 4 個字
