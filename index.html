@@ -19,18 +19,23 @@
         #scalable-container {
             position: relative;
             transform-origin: center center; /* 將縮放中心設置為容器中間 */
+            text-align: center; /* 確保所有文字內容居中 */
         }
         h1 {
             margin-bottom: 5px; /* 縮短標題與段落的間距 */
+            text-align: center; /* 標題置中 */
         }
         p {
             margin-top: 0;
             margin-bottom: 10px; /* 段落與其他內容的距離 */
+            text-align: center; /* 段落置中 */
         }
         .main-image {
+            display: block; /* 保證圖片獨占一行 */
+            margin: 0 auto; /* 圖片置中 */
             width: 70%; /* 縮小主圖片的比例 */
             height: auto;
-            margin: 10px 0;
+            margin-top: 10px; /* 確保與文字有適當距離 */
         }
         .slots {
             display: flex;
