@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>看圖猜字</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 20px;
+            overflow: hidden; /* 確保全螢幕影片正常顯示 */
+        }
+        .slots {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+        .slot {
+            width: 70px;
+            height: 70px;
+            text-align: center;
+            font-size: 24px;
+            line-height: 70px;
+            background-color: #ffffff;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+        }
+        .grid-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(4, 70px);
+            gap: 10px;
+        }
+        .cell {
+            width: 70px;
+            height: 70px;
+            text-align: center;
+            font-size: 24px;
+            line-height: 70px;
+            background-color: #f0f0f0;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .cell:hover {
+            background-color: #d0d0d0;
+        }
+        .side-image {
+            width: 100px;
+            height: auto;
+            margin: 0 20px;
+        }
+        #result {
+            margin-top: 20px;
+            font-size: 18px;
+        }
+        .main-image {
+            width: 300px;
+            height: auto;
+            margin: 20px 0;
+        }
+        #videoContainer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: none; /* 預設不顯示 */
+            background-color: black;
+            z-index: 999;
+        }
+        video {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+    <h1>看圖猜字</h1>
+    <p>請點擊 4x4 網格中的文字，並依正確順序填入上方的空白框。</p>
+
+    <!-- 插入主圖片 -->
+    <img src="your-main-image.png" alt="主要圖片" class="main-image">
+
+    <!-- 空白框 -->
+    <div class="slots" id="answerSlots">
+        <div class="slot" id="slot1"></div>
+        <div class="slot" id="slot2"></div>
+        <div class="slot" id="slot3"></div>
+        <div class="slot" id="slot4"></div>
+    </div>
+    
+    <!-- 4x4 網格和左右圖片 -->
+    <div class="grid-container">
+        <img src="your-left-image.png" alt="左側圖片" class="side-image">
+        <div class="grid" id="wordGrid"></div>
+        <img src="your-right-image.png" alt="右側圖片" class="side-image">
+    </div>
+
+    <p id="result"></p>
+
+    <!-- 背景音樂 -->
+    <audio id="backgroundMusic" src="your-background-music.mp3" autoplay loop></audio>
+
+    <!-- 全螢幕影片容器 -->
+    <div id="videoContainer">
+        <video id="victoryVideo" src="your-victory-video.mp4" autoplay></video>
+    </div>
+
+    <script>
+        // 提供的 4x4 原始文字
+        const words = ["祝", "你", "開", "心", "生", "日", "快", "樂", "身", "體", "健", "康", "福", "如", "東", "海"];
+        const correctAnswers = ["生", "日", "快", "樂"]; // 正確的 4 個字
+        let playerAnswers = []; // 玩家選擇的答案
+
+        // 隨機打亂文字順序
+        const shuffledWords = words.sort(() => Math.random() - 0.5);
+
+        // 將打亂的文字顯示在 4x4 網格中
+        const wordGrid = document.getElementById("wordGrid");
+        shuffledWords.forEach(word => {
+            const cell = document.createElement("div");
+            cell.className = "cell";
+            cell.textContent = word;
+            cell.onclick = () => selectWord(word);
+            wordGrid.appendChild(cell);
+        });
+
+        // 玩家點擊文字時的行為
+        function selectWord(word) {
+            if (playerAnswers.length < 4) {
+                playerAnswers.push(word);
+                const slot = document.getElementById(`slot${playerAnswers.length}`);
+                slot.textContent = word;
+                if (playerAnswers.length === 4) {
+                    checkAnswer();
+                }
+            }
+        }
+
+        // 檢查玩家答案
+        function checkAnswer() {
+            const result = document.getElementById("result");
+            if (JSON.stringify(playerAnswers) === JSON.stringify(correctAnswers)) {
+                result.textContent = "恭喜你，通關成功！";
+                playVictoryVideo();
+            } else {
+                result.textContent = "答案不正確，正在重新開始遊戲...";
+                setTimeout(restartGame, 2000); // 2秒後重新開始遊戲
+            }
+        }
+
+        // 播放通關影片
+        function playVictoryVideo() {
+            const videoContainer = document.getElementById("videoContainer");
+            videoContainer.style.display = "block";
+            const victoryVideo = document.getElementById("victoryVideo");
+            victoryVideo.play();
+            victoryVideo.onended = () => {
+                videoContainer.style.display = "none"; // 影片播放結束後隱藏
+                restartGame();
+            };
+        }
+
+        // 重新啟動遊戲
+        function restartGame() {
+            playerAnswers = [];
+            document.getElementById("result").textContent = "";
+            for (let i = 1; i <= 4; i++) {
+                document.getElementById(`slot${i}`).textContent = "";
+            }
+        }
+    </script>
+</body>
+</html>
