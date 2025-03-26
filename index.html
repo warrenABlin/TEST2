@@ -10,28 +10,29 @@
             text-align: center;
             margin: 0;
             padding: 0;
-            overflow: hidden; /* 確保全螢幕影片正常顯示 */
+            overflow: hidden; /* 防止超出屏幕的內容滾動 */
         }
         .container {
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            min-height: 100vh; /* 保證內容在視窗中央 */
-            padding: 20px;
+            min-height: 100vh; /* 保證內容居中 */
+            padding: 10px;
+            box-sizing: border-box;
         }
         .slots {
             display: flex;
             justify-content: center;
-            gap: 10px;
-            margin-top: 20px;
-            margin-bottom: 20px;
+            gap: 2vw;
+            margin-top: 10px;
+            margin-bottom: 10px;
         }
         .slot {
-            width: 15vw; /* 使用百分比寬度以適應不同屏幕 */
-            height: 15vw; /* 使用百分比高度以適應不同屏幕 */
+            width: 15vw;
+            height: 15vw;
             text-align: center;
-            font-size: 5vw; /* 使用相對大小以適應不同屏幕 */
+            font-size: 4vw;
             line-height: 15vw;
             background-color: #ffffff;
             border: 2px solid #ccc;
@@ -41,18 +42,18 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            margin-top: 20px;
+            margin-top: 10px;
         }
         .grid {
             display: grid;
-            grid-template-columns: repeat(4, 15vw); /* 使用百分比寬度 */
-            gap: 2vw; /* 使用相對間距 */
+            grid-template-columns: repeat(4, 15vw); /* 使用百分比單位 */
+            gap: 2vw;
         }
         .cell {
             width: 15vw;
             height: 15vw;
             text-align: center;
-            font-size: 5vw;
+            font-size: 4vw;
             line-height: 15vw;
             background-color: #f0f0f0;
             border: 2px solid #ccc;
@@ -63,18 +64,18 @@
             background-color: #d0d0d0;
         }
         .side-image {
-            width: 20vw; /* 使用百分比寬度以適應不同屏幕 */
+            width: 20vw; /* 根據屏幕比例設置大小 */
             height: auto;
             margin: 0 2vw;
         }
         #result {
-            margin-top: 20px;
+            margin-top: 10px;
             font-size: 4vw;
         }
         .main-image {
-            width: 60vw; /* 使用百分比寬度以適應不同屏幕 */
+            width: 50vw; /* 調整主圖片的大小 */
             height: auto;
-            margin: 20px 0;
+            margin: 10px 0;
         }
         #videoContainer {
             position: fixed;
@@ -82,13 +83,19 @@
             left: 0;
             width: 100%;
             height: 100%;
-            display: none; /* 預設不顯示 */
+            display: none; /* 預設隱藏 */
             background-color: black;
             z-index: 999;
         }
         video {
             width: 100%;
             height: 100%;
+        }
+        /* 響應式設計：針對橫屏 */
+        @media screen and (orientation: landscape) {
+            .container {
+                padding: 5px; /* 縮減邊距，讓內容更集中 */
+            }
         }
     </style>
 </head>
