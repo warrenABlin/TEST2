@@ -7,16 +7,18 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            text-align: center;
             margin: 0;
             padding: 0;
             overflow: hidden; /* 防止滾動 */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh; /* 保證垂直居中 */
+            background-color: #f9f9f9; /* 添加背景色以提升視覺效果 */
         }
         #scalable-container {
-            position: absolute;
-            top: 0;
-            left: 0;
-            transform-origin: top left;
+            position: relative;
+            transform-origin: center center; /* 將縮放中心設置為容器中間 */
         }
         h1 {
             margin-bottom: 5px; /* 縮短標題與段落的間距 */
@@ -135,10 +137,9 @@
         // 動態縮放比例
         function scaleContent() {
             const scalableContainer = document.getElementById("scalable-container");
-            const scale = Math.min(
-                window.innerWidth / scalableContainer.offsetWidth,
-                window.innerHeight / scalableContainer.offsetHeight
-            );
+            const scaleWidth = window.innerWidth / scalableContainer.offsetWidth;
+            const scaleHeight = window.innerHeight / scalableContainer.offsetHeight;
+            const scale = Math.min(scaleWidth, scaleHeight);
             scalableContainer.style.transform = `scale(${scale})`;
         }
 
